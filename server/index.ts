@@ -1,10 +1,54 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import session from 'express-session';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-serverless';
+import connectPgSimple from 'connect-pg-simple';
+import * as schema from './schema';
+import chatRoutes from './routes/chat';
 
 const app = express();
+const port = process.env.PORT || 3000;
+
+// Database connection
+const sql = neon(process.env.DATABASE_URL!);
+export const db = drizzle(sql, { schema });
+
+// Session configuration
+const PgSession = connectPgSimple(session);
+app.use(session({
+  store: new PgSession({
+    conObject: {
+      connectionString: process.env.DATABASE_URL,
+    },
+  }),
+  secret: process.env.SESSION_SECRET!,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  },
+}));
+
+// Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+
+// CORS configuration for development
+if (process.env.NODE_ENV === 'development') {
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+  });
+}
+
+// Routes
+app.use('/api/chat', chatRoutes);
 
 app.use((req, res, next) => {
   const start = Date.now();
