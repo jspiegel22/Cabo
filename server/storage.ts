@@ -4,11 +4,11 @@ export interface IStorage {
   // Categories
   getCategories(): Promise<Category[]>;
   getCategoryBySlug(slug: string): Promise<Category | undefined>;
-  
+
   // Items
   getItems(categoryId: number): Promise<Item[]>;
   getItemBySlug(slug: string): Promise<Item | undefined>;
-  
+
   // Bookings
   createBooking(booking: InsertBooking): Promise<Booking>;
 }
@@ -24,7 +24,7 @@ export class MemStorage implements IStorage {
     this.items = new Map();
     this.bookings = new Map();
     this.currentIds = { categories: 1, items: 1, bookings: 1 };
-    
+
     // Initialize with sample data
     this.initializeSampleData();
   }
@@ -69,7 +69,11 @@ export class MemStorage implements IStorage {
 
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
     const id = this.currentIds.bookings++;
-    const booking = { ...insertBooking, id };
+    const booking: Booking = {
+      ...insertBooking,
+      id,
+      message: insertBooking.message ?? null // Ensure message is either string or null
+    };
     this.bookings.set(id, booking);
     return booking;
   }

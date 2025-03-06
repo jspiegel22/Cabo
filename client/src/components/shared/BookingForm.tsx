@@ -27,6 +27,7 @@ export default function BookingForm({ itemId }: BookingFormProps) {
     defaultValues: {
       itemId,
       guests: 1,
+      message: "", // Initialize message with empty string
     },
   });
 
