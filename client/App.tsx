@@ -4,6 +4,8 @@ import { Navigation } from './components/Navigation';
 import { Home } from './pages/Home';
 import { Villas } from './pages/Villas';
 import { Yachts } from './pages/Yachts';
+import { Adventures } from './pages/Adventures';
+import { Restaurants } from './pages/Restaurants';
 
 const App: React.FC = () => {
   return (
@@ -12,6 +14,8 @@ const App: React.FC = () => {
         <Route path="/" component={Home} />
         <Route path="/villas" component={Villas} />
         <Route path="/yachts" component={Yachts} />
+        <Route path="/adventures" component={Adventures} />
+        <Route path="/restaurants" component={Restaurants} />
         {/* Add more routes as we create the components */}
         <Route>
           {/* 404 Page */}

@@ -7,8 +7,17 @@ import { drizzle } from 'drizzle-orm/neon-serverless';
 import connectPgSimple from 'connect-pg-simple';
 import * as schema from './schema';
 import chatRoutes from './routes/chat';
+import { createServer } from 'http';
+import { WebSocketServer } from 'ws';
+import MemoryStore from 'memorystore';
+import dotenv from 'dotenv';
+import restaurantsRouter from './api/restaurants';
+
+dotenv.config();
 
 const app = express();
+const server = createServer(app);
+const wss = new WebSocketServer({ server });
 const port = process.env.PORT || 3000;
 
 // Database connection
@@ -35,6 +44,8 @@ app.use(session({
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(express.static('dist'));
 
 // CORS configuration for development
 if (process.env.NODE_ENV === 'development') {
@@ -49,6 +60,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Routes
 app.use('/api/chat', chatRoutes);
+app.use('/api/restaurants', restaurantsRouter);
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -78,6 +90,19 @@ app.use((req, res, next) => {
   });
 
   next();
+});
+
+// WebSocket connection handling
+wss.on('connection', (ws) => {
+  console.log('New WebSocket connection');
+
+  ws.on('message', (message) => {
+    console.log('Received:', message);
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
 });
 
 (async () => {
