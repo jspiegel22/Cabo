@@ -8,7 +8,7 @@ const adventures = [
   {
     id: 1,
     title: 'Luxury Sunset Sailing',
-    description: 'Experience the magic of Cabo's sunset on a private sailing tour with champagne and gourmet appetizers.',
+    description: "Experience the magic of Cabo's sunset on a private sailing tour with champagne and gourmet appetizers.",
     image: '/images/adventure-1.jpg',
     price: '$299/person',
     rating: 4.9,
@@ -18,7 +18,7 @@ const adventures = [
   {
     id: 2,
     title: 'Desert ATV Adventure',
-    description: 'Navigate through Baja's stunning desert landscape on premium ATVs with expert guides.',
+    description: "Navigate through Baja's stunning desert landscape on premium ATVs with expert guides.",
     image: '/images/adventure-2.jpg',
     price: '$189/person',
     rating: 4.7,
@@ -37,14 +37,14 @@ const adventures = [
   },
 ];
 
-export const Adventures: React.FC = () => {
+const Adventures: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   return (
     <PageLayout
-      title="Luxury Adventures"
-      description="Discover extraordinary experiences in Cabo San Lucas"
+      title="Adventures in Cabo"
+      description="Discover thrilling adventures in Cabo San Lucas"
       backgroundImage="/images/adventures-hero.jpg"
     >
       {/* Mobile Filter Toggle */}
@@ -145,4 +145,6 @@ export const Adventures: React.FC = () => {
       </div>
     </PageLayout>
   );
-}; 
+};
+
+export default Adventures; 

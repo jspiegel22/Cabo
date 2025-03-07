@@ -36,7 +36,7 @@ const yachts = [
   },
 ];
 
-export const Yachts: React.FC = () => {
+const Yachts: React.FC = () => {
   return (
     <PageLayout
       title="Luxury Yacht Charters"
@@ -107,4 +107,6 @@ export const Yachts: React.FC = () => {
       </div>
     </PageLayout>
   );
-}; 
+};
+
+export default Yachts; 

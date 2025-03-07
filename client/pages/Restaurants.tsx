@@ -9,7 +9,7 @@ import type { Restaurant } from '../../server/data/restaurants';
 import { reviews, reviewStats } from '../../server/data/reviews';
 import { guides } from '../../server/data/guides';
 
-export const Restaurants: React.FC = () => {
+const Restaurants: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [selectedCuisine, setSelectedCuisine] = useState('');
@@ -605,4 +605,6 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, restaurant
       </div>
     </div>
   );
-}; 
+};
+
+export default Restaurants; 

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route, Switch } from 'wouter';
 import { Navigation } from './components/Navigation';
-import { Home } from './pages/Home';
-import { Villas } from './pages/Villas';
-import { Yachts } from './pages/Yachts';
-import { Adventures } from './pages/Adventures';
-import { Restaurants } from './pages/Restaurants';
+
+const Home = lazy(() => import('./pages/Home'));
+const Villas = lazy(() => import('./pages/Villas'));
+const Yachts = lazy(() => import('./pages/Yachts'));
+const Adventures = lazy(() => import('./pages/Adventures'));
+const Restaurants = lazy(() => import('./pages/Restaurants'));
 
 const App: React.FC = () => {
   return (

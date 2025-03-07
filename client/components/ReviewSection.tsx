@@ -1,6 +1,21 @@
 import React from 'react';
 import { Star, ThumbsUp, Award, CheckCircle } from 'lucide-react';
-import type { Review } from '../../server/data/reviews';
+
+interface Review {
+  id: number;
+  author: string;
+  avatar?: string;
+  rating: number;
+  date: string;
+  title: string;
+  content: string;
+  images?: string[];
+  verified: boolean;
+  source: 'OpenTable' | 'Google' | 'Direct' | 'TripAdvisor' | 'VRBO' | 'Airbnb';
+  language: string;
+  helpful: number;
+  tags: string[];
+}
 
 interface ReviewSectionProps {
   reviews: Review[];
@@ -165,13 +180,13 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ reviews, stats }) 
             <Award className="w-8 h-8 text-blue-600" />
             <div>
               <h4 className="font-semibold">Verified Reviews</h4>
-              <p className="text-sm text-gray-600">All reviews are from real diners</p>
+              <p className="text-sm text-gray-600">All reviews are from real guests</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <Star className="w-8 h-8 text-yellow-400" />
             <div>
-              <h4 className="font-semibold">4.8 Average Rating</h4>
+              <h4 className="font-semibold">{stats.averageRating} Average Rating</h4>
               <p className="text-sm text-gray-600">Based on {stats.totalReviews} reviews</p>
             </div>
           </div>
@@ -179,7 +194,7 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ reviews, stats }) 
             <ThumbsUp className="w-8 h-8 text-green-600" />
             <div>
               <h4 className="font-semibold">95% Recommend</h4>
-              <p className="text-sm text-gray-600">From verified diners</p>
+              <p className="text-sm text-gray-600">From verified guests</p>
             </div>
           </div>
         </div>

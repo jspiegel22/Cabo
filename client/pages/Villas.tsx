@@ -5,7 +5,7 @@ import { Filter, SortAsc, SortDesc, MapPin, Users, Star } from 'lucide-react';
 import { villas, villaStats } from '../../server/data/villas';
 import type { Villa } from '../../server/data/villas';
 
-export const Villas: React.FC = () => {
+const Villas: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [selectedArea, setSelectedArea] = useState('');
@@ -20,9 +20,9 @@ export const Villas: React.FC = () => {
       if (selectedArea && villa.location.area !== selectedArea) return false;
       if (selectedBedrooms && villa.specs.bedrooms !== parseInt(selectedBedrooms)) return false;
       if (selectedPriceRange) {
-        const [min, max] = selectedPriceRange.split('-').map(Number);
+        const [minPrice, maxPrice] = selectedPriceRange.split('-').map(Number);
         const lowestRate = Math.min(...villa.rates.map(r => r.nightly));
-        if (lowestRate < min || lowestRate > max) return false;
+        if (lowestRate < minPrice || lowestRate > maxPrice) return false;
       }
       return true;
     })
@@ -260,4 +260,6 @@ export const Villas: React.FC = () => {
       </div>
     </PageLayout>
   );
-}; 
+};
+
+export default Villas; 

@@ -40,7 +40,7 @@ const categories = [
   },
 ];
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -99,4 +99,6 @@ export const Home: React.FC = () => {
       <ChatWidget userId={1} /> {/* Replace with actual user ID */}
     </div>
   );
-}; 
+};
+
+export default Home; 
